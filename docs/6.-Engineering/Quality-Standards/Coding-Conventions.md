@@ -23,4 +23,90 @@ Unit and Integration tests should make use [Shouldly](https://github.com/shouldl
 
 # TypeScript and JavaScript Coding Conventions
 
-> _TODO: document this section and link to an industry-standard style guide_
+As a department we have agreed to use the AirBnb as our baseline for code styling. We use ESLint to ensure coding styles are followed. 
+
+We install the required packages in a typescript project. 
+
+* `@typescript-eslint/eslint-plugin`
+* `@typescript-eslint/parser`
+* `eslint`
+* `eslint-config-airbnb-base`
+* `eslint-config-airbnb-typescript` [Link](https://www.npmjs.com/package/eslint-config-airbnb-typescript)
+
+For React Project we additionally add the following packages.
+
+* `eslint-plugin-react`
+
+We create an eslint config file with in the project. (.eslintrc.js)
+
+```Javascript
+module.exports = { 
+  env: { 
+    es2021: true, 
+    node: true, 
+  }, 
+  extends: [ 
+    'airbnb-base', 
+  ], 
+  parser: '@typescript-eslint/parser', 
+  parserOptions: { 
+    ecmaVersion: 'latest', 
+    sourceType: 'module', 
+  }, 
+  plugins: [ 
+    '@typescript-eslint', 
+  ], 
+  ignorePatterns: ['node_modules/'], 
+  rules: { 
+  }, 
+  settings: { 
+    'import/resolver': { 
+      node: { 
+        extensions: ['.js', '.jsx', '.ts', '.tsx'], 
+      }, 
+    }, 
+  }, 
+}; 
+```
+
+There is an option to override rules in the `rules` section in the eslintrc file.
+
+The AirBnb Guideline is located here https://github.com/airbnb/javascript although this is saying Javascript, alot of this can be applied to the typescript styling. 
+
+Examples of code styling are below 
+
+Consistent use of Qutoes, although single and double quotes are interchangable for strings in typescript/javascript, guides suggest use of one version.
+```typescript
+
+const myString = 'Hello world'; //Use single quotes
+const myOtherString = "Hello world"; //Dont use double quotes
+
+```
+Single quotes is most commonly used
+
+
+Using `const` over `var` and `let` unless the value is going to change, use `let`
+```typescript
+
+const someValue = 1; //Value will not change
+
+let someOtherValue = 1; //Value most likely to change
+someOtherValue = 2;
+
+```
+Try to avoid the use of `var` as this is globally scoped, where as `const` and `let` are scoped locally. 
+
+Not exceeding max line length 
+```typescript
+//Long line (using react for illastration purposes)
+const TextField:FC<TextFieldProps> = (props) => <MuiTextField disabled={props.disabled} required={props.required} type={props.type} variant={props.variant} label={props.label} />;
+
+//Broken down
+const TextField:FC<TextFieldProps> = (props) => (
+    <MuiTextField disabled={props.disabled}
+                  required={props.required}
+                  type={props.type}
+                  variant={props.variant}
+                  label={props.label} />
+);
+```
